@@ -1,0 +1,2 @@
+# claptrap
+Ultimate Discord bot
