@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 
-const token = 'NzA4Mzk0MTMyNTY1MTMxMzI1.XrWuCg.UQpLb8YM30YJHtieINrOgATuKLE';
+require('config.js');
 
 bot.on('ready', () =>{
         console.log('Claptrap is online!');
