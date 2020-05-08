@@ -1,14 +1,14 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 
-require('config.js');
+const token = require('./token.js');
 
 bot.on('ready', () =>{
-        console.log('Claptrap is online!');
+    console.log('Claptrap is online!');
 })
 
 bot.on('message', message=>{
-    if(message.content === "HELLO") {
+    if(message.content == "hello") {
         message.reply('Hello World!');
     }
 
