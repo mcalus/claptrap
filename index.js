@@ -3,13 +3,21 @@ const bot = new Discord.Client();
 
 const token = require('./token.js');
 
+const command = require('./commands.js');
+
 bot.on('ready', () =>{
     console.log('Claptrap is online!');
 })
 
 bot.on('message', message=>{
+    var msgcommand = message.content.split(" ");
+
     if(message.content == "hello") {
         message.reply('Hello World!');
+    }
+
+    if(msgcommand[0] == "/rand") {
+        message.reply("Wylosowana liczba to: " & command.rand(msgcommand[1], msgcommand[2]));
     }
 
 
