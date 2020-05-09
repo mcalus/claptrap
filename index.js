@@ -7,13 +7,13 @@ const commands = require('./commands.js');
 
 bot.on('ready', () =>{
     console.log('Claptrap is online!');
-    var test = bot.channels.fetch('707274162460426391');
-    console.log(test.guild);
+    //var test = bot.channels.fetch('707274162460426391');
+    //console.log(test.guild);
 })
 
 bot.on('message', message=>{
     var usercommand = message.content.split(" ");
-
+    
     if(message.content.toLowerCase() == "hello") {
         message.reply('Hello World!');
     }
@@ -29,7 +29,39 @@ bot.on('message', message=>{
         }
     });
 
-    if(usercommand[0] == "rcu") {
+    if(usercommand[0].toLowerCase() == "addme" || usercommand[0].toLowerCase() == "gram!") {
+        let guild = bot.guilds.cache.get('702933427183288351');
+        let member = guild.member(message.author);
+        //console.log(guild.channels);
+        //console.log(guild.presences);
+        //console.log(guild.voiceStates);
+        //console.log(member);
+        message.reply(commands.addVolunteer(member));
+    }
+
+    if(usercommand[0].toLowerCase() == "add") {
+        let guild = bot.guilds.cache.get('702933427183288351');
+        let member = guild.member(usercommand[1]);
+        
+        if(member != undefined)
+            message.reply(commands.addVolunteer(member));
+        else
+            message.reply('brak takiego gracza do dodania');
+    }
+
+    if(usercommand[0].toLowerCase() == "show") {
+        message.reply(commands.showVolunteer());
+    }
+
+    if(usercommand[0].toLowerCase() == "pick") {
+        message.reply(commands.pickVolunteer());
+    }
+
+    if(usercommand[0].toLowerCase() == "clear") {
+        commands.clearVolunteer();
+    }
+
+    if(usercommand[0].toLowerCase() == "rcu") {
         var channel;
 
         if(usercommand[1] === undefined)
