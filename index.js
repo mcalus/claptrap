@@ -22,8 +22,9 @@ bot.on('message', message=>{
         message.reply("Wylosowana liczba to: " + commands.randomNumber(parseInt(usercommand[1]), parseInt(usercommand[2])));
     }
 
+    //console.log(bot);
     usercommand.forEach(comm => {
-        if(comm.toLowerCase() == "claptrap") {
+        if(comm.toLowerCase().substr(0, 8) == "claptrap" || comm.slice(3, -1) == bot.user.id || comm.slice(2, -1) == bot.user.id) {
             message.reply(commands.claptrapQuote());
             return;
         }
