@@ -58,6 +58,15 @@ bot.on('message', message=>{
         message.reply(commands.pickVolunteer());
     }
 
+    if(usercommand[0].toLowerCase() == "pickd") {
+        message.reply(commands.pickVolunteer(true));
+    }
+
+    if(usercommand[0].toLowerCase() == "delete") {
+        if(usercommand[1] != undefined) 
+            message.reply(commands.deleteVolunteer(usercommand[1].slice(3, -1)));
+    }
+
     if(usercommand[0].toLowerCase() == "clear") {
         commands.clearVolunteer();
     }
@@ -71,6 +80,24 @@ bot.on('message', message=>{
             channel = bot.channels.fetch(usercommand[1]);
         console.log(channel);
         message.reply("Wylosowany użytkownik to: " + commands.randomChannelUser(channel));
+    }
+
+    if(usercommand[0].toLowerCase() == "addvote") {
+        let guild = bot.guilds.cache.get('702933427183288351');
+        let member = guild.member(usercommand[1].slice(3, -1));
+        
+        if(member != undefined)
+            message.reply(commands.addVote(message.author.id, member));
+        else
+            message.reply('brak takiego gracza do dodania');
+    }
+
+    if(usercommand[0].toLowerCase() == "clearvote") {
+        commands.clearVote();
+    }
+
+    if(usercommand[0].toLowerCase() == "showvote") {
+        message.reply(commands.showVote());
     }
 })
 

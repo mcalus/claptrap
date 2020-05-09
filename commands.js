@@ -1,4 +1,6 @@
 var volunteers = []; 
+var votes = []; 
+var voters = []; 
 
 module.exports = {
     randomNumber: function (min, max) {
@@ -60,7 +62,7 @@ module.exports = {
 
         return list;
     },
-    pickVolunteer: function () {
+    pickVolunteer: function (del) {
         
         if(volunteers.length < 1) {
             return 'Nie ma zgłoszonych graczy';
@@ -70,14 +72,85 @@ module.exports = {
         let pick = volunteers[number];
 
         //this.clearVolunteer();
+        if(del != undefined) {
+            this.deleteVolunteer(pick.user.id);
+        }
 
         number++;
         return '\nWylosowany uczestnik to \n' + number + '. <@' + pick.user.id + '>';
 
     },
+    deleteVolunteer: function (user) {
+        let check = false;
+
+        volunteers.forEach((usr, i) => {
+            if(usr.user.id == user) {
+                check = usr.displayName;
+                volunteers.splice(i, 1);
+                return;
+            }
+        });
+
+        if(check != false)
+            return "usunięto gracza " + check;
+        else
+            return "brak takiego gracza";
+    },
     clearVolunteer: function () {
         
         volunteers = [];
+
+    },
+    addVote: function (user, vote) {
+        
+        let checkUser = false;
+        let checkVote = false;
+
+        voters.forEach(usr => {
+            if(usr == user) {
+                checkUser = true;
+                return;
+            }
+        });
+
+        for (let [key, value] of Object.entries(votes)) {
+            if(key == vote.displayName) {
+                checkVote = true;
+                break;
+            }
+        }
+
+        if(checkUser) {
+            return 'już głosowałeś...\n';
+        }
+        else {
+            if(checkVote == false) {
+                votes[vote.displayName] = 1;
+            }
+            else {
+                votes[vote.displayName]++;
+            }
+            
+            voters.push(user); 
+            this.showVote();
+            return 'głos dodany';
+        }
+
+    },
+    showVote: function () {
+        
+        let list = '\nGłosy: ';
+        
+        for (let [key, value] of Object.entries(votes)) {
+            list += '\n' + key + ' => ' + value;
+        }
+
+        return list;
+    },
+    clearVote: function () {
+        
+        votes = [];
+        voters = [];
 
     },
   };
