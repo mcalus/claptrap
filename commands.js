@@ -153,7 +153,7 @@ module.exports = {
         voters = [];
 
     },
-  };
+};
 
 
   

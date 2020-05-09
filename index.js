@@ -4,6 +4,7 @@ const bot = new Discord.Client();
 const token = require('./token.js');
 
 const commands = require('./commands.js');
+const cthulu = require('./cthulu.js');
 
 bot.on('ready', () =>{
     console.log('Claptrap is online!');
