@@ -3,46 +3,42 @@ const bot = new Discord.Client();
 
 const token = require('./token.js');
 
-const command = require('./commands.js');
+const commands = require('./commands.js');
 
 bot.on('ready', () =>{
     console.log('Claptrap is online!');
+    var test = bot.channels.fetch('707274162460426391');
+    console.log(test.guild);
 })
 
 bot.on('message', message=>{
-    var msgcommand = message.content.split(" ");
+    var usercommand = message.content.split(" ");
 
-    if(message.content == "hello") {
+    if(message.content.toLowerCase() == "hello") {
         message.reply('Hello World!');
     }
 
-    if(msgcommand[0] == "/rand") {
-        message.reply("Wylosowana liczba to: " & command.rand(msgcommand[1], msgcommand[2]));
+    if(usercommand[0] == "r") {
+        message.reply("Wylosowana liczba to: " + commands.randomNumber(parseInt(usercommand[1]), parseInt(usercommand[2])));
     }
 
-
-    const chan = message.channel;
-    const answer = 'test';
-
-    //Select a random user
-    const user = message.channel.members.random();
-    //console.log(user);
-    //message.reply(user.nickname);
-    //const userid = user.id
-    /*
-    //fetch messages from the user and contains answer
-    chan.fetchMessages().then(messages => {
-        const usermsgs = messages.filter(
-            m => m.content === answer);
-
-        if(usermsgs){
-            const randomCorrectUser = usermsgs.random().author;
-            message.reply('winner is' + `${randomCorrectUser.username}`);
-        }else{
-            message.reply('No Winner');
+    usercommand.forEach(comm => {
+        if(comm.toLowerCase() == "claptrap") {
+            message.reply(commands.claptrapQuote());
+            return;
         }
-    }).catch(console.error);
-    */
+    });
+
+    if(usercommand[0] == "rcu") {
+        var channel;
+
+        if(usercommand[1] === undefined)
+            channel = bot.channels.fetch("707274162460426391");
+        else
+            channel = bot.channels.fetch(usercommand[1]);
+        console.log(channel);
+        message.reply("Wylosowany użytkownik to: " + commands.randomChannelUser(channel));
+    }
 })
 
 bot.login(token);
